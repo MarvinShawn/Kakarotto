@@ -1,7 +1,7 @@
 {
   "name": "qiushibaike",
   "version": "1.0.0",
-  "description": "graphQL with Koa2",
+  "description": "GraphQL with Koa2",
   "main": "index.js",
   "private": true,
   "dependencies": {
@@ -18,7 +18,7 @@
     "mongoose": "^5.0.7"
   },
   "scripts": {
-    "start": "node index.js"
+    "start": "NODE_ENV=production pm2 start index.js --name 'kakarotto'"
   },
   "engines": {
     "node": ">=8.6.0"
