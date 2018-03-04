@@ -9,9 +9,7 @@ const app = new koa();
 const router = new koaRouter();
 //post请求
 app.use(koaBody())
-router.get('/test', (ctx, next) => {
-  ctx.body = "test page"
-});
+
 //设置路由
 router.get('/graphql', graphqlKoa({ schema: schema }));
 router.post('/graphql', graphqlKoa({ schema: schema }))
