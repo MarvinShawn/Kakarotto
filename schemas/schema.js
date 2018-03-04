@@ -89,7 +89,7 @@ const helper = (model) => {
             } else {
                 totalPageNum = Math.ceil(totalCount / 10)
             }
-            const h = await model.find({}).limit(params.pageNum > 0 ? params.pageNum : 10).skip(totalPageNum * (params.page - 1));
+            const h = await model.find({}).limit(params.pageNum > 0 ? params.pageNum : 10).skip(params.pageNum * (params.page - 1));
             return {
                 totalPages: totalPageNum,
                 currentPage: params.page,
