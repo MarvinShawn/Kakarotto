@@ -22,6 +22,6 @@ if (db) {
 }
 
 export const HotModel = db.model('HotItem', qiushiItemSchema)
-export const ImageModel = db.model('ImageItems', qiushiItemSchema)
-export const NewModel = db.model('NewItems', qiushiItemSchema)
-export const TextModel = db.model('TextItems', qiushiItemSchema)
+export const ImageModel = db.model('ImageItem', qiushiItemSchema)
+export const NewModel = db.model('NewItem', qiushiItemSchema)
+export const TextModel = db.model('TextItem', qiushiItemSchema)
