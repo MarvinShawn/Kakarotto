@@ -18,7 +18,7 @@
     "mongoose": "^5.0.7"
   },
   "scripts": {
-    "start": "NODE_ENV=production pm2 start index.js --name 'kakatotto'"
+    "start": "NODE_ENV=production pm2 start index.js --name 'kakarotto'"
   },
   "engines": {
     "node": ">=8.6.0"

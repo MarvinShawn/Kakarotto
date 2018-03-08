@@ -82,14 +82,14 @@ const helper = (model) => {
             }
         },
         resolve: async (root, params) => {
-            const totalCount = await model.count()
+            const totalCount = await model.count();
             var totalPageNum = 0;
             if (params.pageNum > 0) {
-                totalPageNum = Math.ceil(totalCount / params.pageNum)
+                totalPageNum = Math.ceil(totalCount / params.pageNum);
             } else {
-                totalPageNum = Math.ceil(totalCount / 10)
+                totalPageNum = Math.ceil(totalCount / 10);
             }
-            const h = await model.find({}).limit(params.pageNum > 0 ? params.pageNum : 10).skip(params.pageNum * (params.page - 1));
+            const h = await model.find({}).sort({ "_id": -1 }).limit(params.pageNum > 0 ? params.pageNum : 10).skip(params.pageNum * (params.page - 1));
             return {
                 totalPages: totalPageNum,
                 currentPage: params.page,
