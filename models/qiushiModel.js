@@ -10,7 +10,8 @@ const qiushiItemSchema = new Schema({
     age: Number,
     gender: Boolean,
     contentImg: String,
-    ratio: Number
+    ratio: Number,
+    type: Number
 });
 
 // 连接mongoDB
@@ -21,7 +22,4 @@ if (db) {
     console.log("connected failed");
 }
 
-export const HotModel = db.model('HotItem', qiushiItemSchema)
-export const ImageModel = db.model('ImageItem', qiushiItemSchema)
-export const NewModel = db.model('NewItem', qiushiItemSchema)
-export const TextModel = db.model('TextItem', qiushiItemSchema)
+export const QiushiItemModel = db.model('QiushiItem', qiushiItemSchema)

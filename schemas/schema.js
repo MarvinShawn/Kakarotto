@@ -8,7 +8,7 @@ import {
     GraphQLList,
     GraphQLSchema
 } from "graphql"
-import { HotModel, ImageModel, NewModel, TextModel } from "../models"
+import { QiushiItemModel } from "../models"
 
 const QiushiItemType = new GraphQLObjectType({
     name: 'QiushiItem',
@@ -52,16 +52,20 @@ const PageInfoType = new GraphQLObjectType(
         description: 'page info items',
         fields: () => ({
             totalPages: {
-                type: GraphQLInt
+                type: GraphQLInt,
+                description: "total pages"
             },
             currentPage: {
-                type: GraphQLInt
+                type: GraphQLInt,
+                description: "current page"
             },
             pageItems: {
-                type: GraphQLInt
+                type: GraphQLInt,
+                description: "items per page"
             },
             rows: {
-                type: new GraphQLList(QiushiItemType)
+                type: new GraphQLList(QiushiItemType),
+                description: "items array"
             }
         }),
     }
@@ -74,22 +78,29 @@ const helper = (model) => {
         args: {
             page: {
                 name: "page",
-                type: GraphQLInt
+                type: GraphQLInt,
+                description: "request page"
             },
             pageNum: {
                 name: "pageNum",
-                type: GraphQLInt
+                type: GraphQLInt,
+                description: "request page number"
+            },
+            type: {
+                name: "qiushi type",
+                type: GraphQLInt,
+                description: "0->hot 1->24hours 2->hot image 3->text 4->chuanyue 5->qiutu 6->fresh"
             }
         },
         resolve: async (root, params) => {
-            const totalCount = await model.count();
+            const totalCount = await model.find({ "type": params.type }).count();
             var totalPageNum = 0;
             if (params.pageNum > 0) {
                 totalPageNum = Math.ceil(totalCount / params.pageNum);
             } else {
                 totalPageNum = Math.ceil(totalCount / 10);
             }
-            const h = await model.find({}).sort({ "_id": -1 }).limit(params.pageNum > 0 ? params.pageNum : 10).skip(params.pageNum * (params.page - 1));
+            const h = await model.find({ "type": params.type }).sort({ "_id": -1 }).limit(params.pageNum > 0 ? params.pageNum : 10).skip(params.pageNum * (params.page - 1));
             return {
                 totalPages: totalPageNum,
                 currentPage: params.page,
@@ -105,10 +116,7 @@ export const schema = new GraphQLSchema({
         name: "Query",
         description: "Qiushibaike",
         fields: () => ({
-            hots: helper(HotModel),
-            news: helper(NewModel),
-            images: helper(ImageModel),
-            texts: helper(TextModel)
+            items: helper(QiushiItemModel)
         })
     })
 })
